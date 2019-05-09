@@ -7,8 +7,9 @@ let bmiSchema = new Schema({
   ideal: String,
   result: Number,
   userId: {
-        type: Schema.Types.ObjectId, ref: "User"
-    }
+    type: Schema.Types.ObjectId, ref: "User"
+  },
+  date: String
 })
 
 let bmi = mongoose.model('bmi', bmiSchema)
