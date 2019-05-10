@@ -20,6 +20,7 @@ class userController {
         res.status(201).json(data)
       })
       .catch(err => {
+        console.log(err,'jeje')
         res.status(500).json({ err })
       })
   }
@@ -30,7 +31,7 @@ class userController {
         if (userFound) {
           if (compare(req.body.password, userFound.password)) {
             let token = sign({ _id: userFound._id, name: userFound.name })
-            res.status(200).json({ token, userId: userFound._id, name: userFound.name })
+            res.status(200).json({ token, userId: userFound._id, userName: userFound.name, pp: userFound.image_profil })
           } else {
             res.status(400).json({ msg: "Bad request" })
           }
