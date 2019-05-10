@@ -4,6 +4,7 @@ const { sign } = require('../helpers/jwt')
 
 class userController {
   static create(req, res) {
+    console.log(req.body.name,req.body.image,req.body.password)
     let newUser = {
       name: req.body.name,
       image_profil: req.body.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_960_720.png",
@@ -15,6 +16,7 @@ class userController {
         res.status(201).json(data)
       })
       .catch(err => {
+        console.log(err,'jeje')
         res.status(500).json({ err })
       })
   }
@@ -25,7 +27,7 @@ class userController {
         if (userFound) {
           if (compare(req.body.password, userFound.password)) {
             let token = sign({ _id: userFound._id, name: userFound.name })
-            res.status(200).json({ token, userId: userFound._id, userName: userFound.name })
+            res.status(200).json({ token, userId: userFound._id, userName: userFound.name, pp: userFound.image_profil })
           } else {
             res.status(400).json({ msg: "Bad request" })
           }

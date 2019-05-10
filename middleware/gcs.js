@@ -7,8 +7,11 @@ const CLOUD_BUCKET = process.env.CLOUD_BUCKET
 
 const storage = Storage({
   projectId: process.env.GCLOUD_PROJECT,
-  keyFilename: process.env.KEYFILE_PATH
+  keyFilename: 'keyfile.json'
 })
+
+console.log(storage)
+
 const bucket = storage.bucket(CLOUD_BUCKET)
 
 const getPublicUrl = (filename) => {
@@ -20,7 +23,8 @@ const sendUploadToGCS = (req, res, next) => {
     return next()
   }
 
-  const gcsname = Date.now() + req.file.originalname    //custom name file in gcs
+  const gcsname = (Date.now()).toString() + req.file.originalName 
+  console.log(gcsname,'opopop')
   const file = bucket.file(gcsname)
 
   const stream = file.createWriteStream({

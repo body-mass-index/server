@@ -1,4 +1,6 @@
 const bmiModel = require('../models/bmi')
+const axios = require('axios')
+const unirest = require('unirest')
 
 class bmi {
   static create(req, res) {
@@ -53,6 +55,18 @@ class bmi {
       .catch(err => {
         res.status(500).json({ err })
       })
+  }
+  static findResult(req,res){
+    let weight = req.body.weight
+    let height = req.body.height
+    // console.log(weight,'kg',height,'m')
+    unirest.get(`https://gabamnml-health-v1.p.rapidapi.com/bmi?weight=${weight}&height=${height}`)
+        .header("X-RapidAPI-Host", "gabamnml-health-v1.p.rapidapi.com")
+        .header("X-RapidAPI-Key", "baae6a8eb5mshb8252ad5b441c8dp1f5229jsn6ba1fa057429")
+        .end(function (result) {
+          // console.log(result.body)
+            res.status(200).json(result.body)
+        });
   }
 }
 
